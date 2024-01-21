@@ -1,7 +1,5 @@
-import React from 'react';
-import { FaPaypal, FaCreditCard } from 'react-icons/fa';
-import { SiPhonepe,SiRazorpay } from "react-icons/si";
-import { Button } from "@/components/ui/button"
+'use client'
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -10,19 +8,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import RayzorPayButton from '../Button/RayzorPayButton';
 import PhonepeButton from '../Button/PhonepeButton';
+import { PaymentContext } from '@/store/context';
 
 const PaymentCard = () => {
+  const [Name, setName] = useState("");
+  const [amount, setAmount] = useState(0);
+
+  const { setUser } = useContext(PaymentContext);
+
+  useEffect(() => {
+    setUser({
+      UserName: Name,
+      Amount: amount
+    });
+  }, []); // Include Name and amount in the dependency array
+
   return (
     <div className='flex justify-center items-center gap-4 mt-8'>
 
@@ -35,19 +39,19 @@ const PaymentCard = () => {
           <form>
             <div className="grid grid-cols-1 gap-4">
               <div className="flex flex-col space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Name of your project" />
+                <Label htmlFor="name">Username</Label>
+                <Input id="name" placeholder="Enter your username" onChange={(e) => { setName(e.target.value) }} />
               </div>
               <div className="flex flex-col space-y-2">
-                <Label htmlFor="framework">Enter The Amont</Label>
-                <Input placeholder='$$$'/>
+                <Label htmlFor="framework">Enter The Amount</Label>
+                <Input placeholder='$$$' onChange={(e) => { setAmount(e.target.value) }} />
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between bg-gray-100 py-4 px-6">
-         <RayzorPayButton/>
-          <PhonepeButton/>
+          <RayzorPayButton />
+          <PhonepeButton />
         </CardFooter>
       </Card>
 

@@ -1,13 +1,15 @@
 'use client'
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
-const PaymentContext = createContext();
+export const PaymentContext = createContext();
 
 export  function PaymentProvider({children}) {
-    const [UserName, setUserName] = useState("");
-    const [PayMethod, setPayMethod] = useState("");
+    const [User, setUser] = useState({
+        UserName:"",
+        Amount:""
+    });
     return(
-        <PaymentContext.Provider value={{}}>
+        <PaymentContext.Provider value={{User,setUser}}>
             {children}
         </PaymentContext.Provider>
     )
